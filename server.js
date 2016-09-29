@@ -1,3 +1,4 @@
+var path = require('path');
 var express = require('express');
 var app = express();
 
@@ -6,6 +7,8 @@ var env_string = process.argv[2];
 var port_string = process.argv[3];
 var mongodbURL ;
 
+app.set( 'public' , path.join( __dirname , 'public'));
+app.use(express.static(app.get('public'))); //在靜態資料夾裡會自動找到index.html
 
 if( typeof port_string !== 'undefined' && port_string.length != 0 ){
     port_value = port_string ;
