@@ -3,4 +3,6 @@ module.exports = function ( app ){
     thingsController.setDBConnectionFromApp(app);
 
     app.get('/services/v1/things' , thingsController.findAll );
+    app.get('/services/v1/things/:id' ,thingsController.findById );
+
 }
