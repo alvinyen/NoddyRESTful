@@ -31,33 +31,35 @@ if( typeof env_string === 'undefined'){
 
 }
 
-
-//routes
-app.set( 'public' , path.join( __dirname , 'public'));
-app.use(express.static(app.get('public'))); //在靜態資料夾裡會自動找到index.html
-app.use(function ( req , res , next ){
-    res.status(404);
-    res.sendFile(path.join( app.get('public') , '404.html'));
-});
-app.use(function ( err , req , res , next){
-    console.log(err.stack);
-
-    res.status(500);
-    res.sendfile(app.get('public') , '500.html');
-});
-
-app.get('/hello',function(req,res){
-    res.type('text/plain');
-    res.send('aloha~');
-});
-
 //mongodb
 MongoClient.connect( mongodbURL , function ( err , dbConnection ){
     assert.equal(null,err);
     console.log( ' connected successfully to mongodb server ' + mongodbURL);
 
     db = dbConnection ; //全域
-    app.set( 'dbConnection' , dbConnection );
+    app.set( 'dbConnection' , dbConnection ); //global
+
+    require('./routes/things')(app);
+
+    app.get('/hello',function(req,res){
+        res.type('text/plain');
+        res.status(200);
+        res.send('aloha~');
+    });
+
+    //routes
+    app.set( 'public' , path.join( __dirname , 'public'));
+    app.use(express.static(app.get('public'))); //在靜態資料夾裡會自動找到index.html
+    app.use(function ( req , res , next ){
+        res.status(404);
+        res.sendFile(path.join( app.get('public') , '404.html'));
+    });
+    app.use(function ( err , req , res , next){
+        console.log(err.stack);
+
+        res.status(500);
+        res.sendfile(app.get('public') , '500.html');
+    });
 
     app.listen(Number(port_value));
     console.log('server is running on ' + Number(port_value));
