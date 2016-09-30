@@ -2,7 +2,12 @@ var MongoClient = require('mongodb').MongoClient;
 var assert = require('assert'); // for assert db connection
 var path = require('path');
 var express = require('express');
+var body_parser = require('body-parser');
+
 var app = express();
+app.use(body_parser.json());
+app.use(body_parser.urlencoded({ extended : true }));
+
 
 var port_value = 4000;
 var env_string = process.argv[2];

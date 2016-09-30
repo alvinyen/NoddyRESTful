@@ -66,5 +66,36 @@ exports.findById = function ( req , res ){
             res.send({ success:false , msg:'item not found' });
         }
     });
+}
 
+exports.add = function ( req , res ){
+    var collection = dbConnection.collection('Things');
+    var item = req.body;
+    res.type('application/json');
+
+    var newItem = {};
+    newItem.name = req.body.name;
+    newItem.location = req.body.location;
+    newItem.time = Date.now() / 1000;
+
+    var checkItem = collection.findOne({ name : item.name}, function ( err , returnItem){
+       if( returnItem != null ) {
+           res.status(201);
+           res.json(returnItem);
+
+       }else{
+           collection.insertOne( newItem , function ( err , returnItem ){
+
+               if(returnItem!=null){
+                   res.status(201);
+                   res.json( newItem );
+               }else{
+                   console.log('insert failed..');
+                   res.status(400); //???why???
+                   res.send( { success:false , msg:'insert failed..' });
+               }
+           });
+       }
+
+    });
 }
