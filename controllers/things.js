@@ -85,8 +85,7 @@ exports.add = function ( req , res ){
 
        }else{
            collection.insertOne( newItem , function ( err , returnItem ){
-
-               if(returnItem!=null){
+               if(returnItem != null){
                    res.status(201);
                    res.json( newItem );
                }else{
@@ -97,5 +96,32 @@ exports.add = function ( req , res ){
            });
        }
 
+    });
+}
+
+exports.update = function ( req , res ){
+    collection = dbConnection.collection('Things');
+    res.type('application/json');
+
+    var item = req.body;
+
+    var objectId ;
+    try{
+        objectId = ObjectID(req.params.id);
+    }catch (e){
+        console.log('update failed because of invalid object id..');
+        res.status();
+        res.send({ success:false , msg:'update failed because of invalid object id..'});
+    }
+
+    var items = collection.update( { _id:objectId } , { "$set" : item } ,function(err,returnItem){
+        if(returnItem == null){
+            console.log('update failed during db update operation..');
+            res.status();
+            res.send( { success : false , msg : 'update failed during db update operation..' } );
+        }else{
+            res.status(200);
+            res.json( { success : true ,  msg : 'success to update！！' } );
+        }
     });
 }

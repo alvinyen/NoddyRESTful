@@ -7,4 +7,6 @@ module.exports = function ( app ){
 
     app.post('/services/v1/things' , thingsController.add );
 
+    app.put('/services/v1/things/:id' , thingsController.update);
+
 }
