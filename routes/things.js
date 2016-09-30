@@ -9,4 +9,6 @@ module.exports = function ( app ){
 
     app.put('/services/v1/things/:id' , thingsController.update);
 
+    app.delete('/services/v1/things/:id' , thingsController.delete);
+
 }

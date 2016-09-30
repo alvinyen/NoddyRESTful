@@ -117,11 +117,39 @@ exports.update = function ( req , res ){
     var items = collection.update( { _id:objectId } , { "$set" : item } ,function(err,returnItem){
         if(returnItem == null){
             console.log('update failed during db update operation..');
-            res.status();
+            res.status(400);
             res.send( { success : false , msg : 'update failed during db update operation..' } );
         }else{
             res.status(200);
             res.json( { success : true ,  msg : 'success to update！！' } );
+        }
+    });
+}
+
+exports.delete = function ( req , res ){
+    collection = dbConnection.collection('Things');
+    res.type('application/json');
+
+    var objectId ;
+    try{
+        objectId = ObjectID(req.params.id);
+    }catch (e){
+        res.status(400);
+        res.send({success:false,msg:'invalid object id'});
+        return;
+    }
+
+    var items = collection.remove( { _id:objectId } , function ( err , status){
+        console.log('status = ' + status);
+        if( status.n == 0 ){
+            //刪除失敗
+            console.log('failed to delete during db remove operation..');
+            res.status();
+            res.send({success:false,msg:'failed to delete during db remove operation..'});
+        }else{
+            res.status(204);
+            res.json({success:true,msg:'success to delete！'});
+            console.log('success to delete！');
         }
     });
 }
