@@ -15,7 +15,7 @@ exports.findAll = function ( req , res ){
         if(err){
             res.type(500);
             res.send({ success:false , msg:'database error..'});
-            return
+            return;
         }
 
         var itemsList = [];
@@ -59,6 +59,7 @@ exports.findById = function ( req , res ){
             newItem.id = returnItem._id;
             newItem.name = returnItem.name;
             newItem.location = returnItem.location;
+
             res.status(200);
             res.json( newItem);
         }else{

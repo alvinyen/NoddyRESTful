@@ -45,6 +45,7 @@ MongoClient.connect( mongodbURL , function ( err , dbConnection ){
     app.set( 'dbConnection' , dbConnection ); //global
 
     require('./routes/things')(app);
+    require('./routes/users')(app);
 
     app.get('/hello',function(req,res){
         res.type('text/plain');
