@@ -2,7 +2,7 @@ var dbConnection ;
 
 var ObjectID = require('mongodb').ObjectID;
 
-var User = require('../Models/User.model');
+var User = require('../models/User.model');
 
 exports.setDBConnectionFromApp = function ( app ){
     dbConnection = app.get('dbConnection');

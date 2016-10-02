@@ -11,8 +11,8 @@ app.use(body_parser.urlencoded({ extended : true }));
 
 
 var port_value = 4000;
-var env_string = process.argv[2];
-var port_string = process.argv[3];
+//var env_string = process.argv[3];
+var port_string = process.argv[2];
 
 //var mongodbURL ;
 var mongodbURL = 'mongodb://localhost:27017/Noddy' ; //for mocha testing

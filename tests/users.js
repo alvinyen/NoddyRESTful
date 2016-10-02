@@ -4,7 +4,7 @@ var chai_http = require('chai-http');
 
 var should = chai.should();
 
-var Users = require('../Models/User.model');
+var Users = require('../models/User.model');
 var server = require('../server');
 
 chai.use(chai_http);
