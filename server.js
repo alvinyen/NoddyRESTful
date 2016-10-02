@@ -14,28 +14,30 @@ var port_value = 4000;
 var env_string = process.argv[2];
 var port_string = process.argv[3];
 
-var mongodbURL ;
+//var mongodbURL ;
+var mongodbURL = 'mongodb://localhost:27017/Noddy' ; //for mocha testing
 var db ;
 
 if( typeof port_string !== 'undefined' && port_string.length != 0 ){
     port_value = port_string ;
 }
 
-if( typeof env_string === 'undefined'){
-    console.log('env_string is not set！');
-    return -1;
-}else{
-    switch(env_string){
-        case 'DEV':
-            //dev db setting
-            mongodbURL = 'mongodb://localhost:27017/Noddy';
-            break;
-        default:
-            console.log('env_string is not valid！');
-            return -1;
-    }
-
-}
+//for mocha testing only
+// if( typeof env_string === 'undefined'){
+//     console.log('env_string is not set！');
+//     return -1;
+// }else{
+//     switch(env_string){
+//         case 'DEV':
+//             //dev db setting
+//             mongodbURL = 'mongodb://localhost:27017/Noddy';
+//             break;
+//         default:
+//             console.log('env_string is not valid！');
+//             return -1;
+//     }
+//
+// }
 
 //mongodb
 MongoClient.connect( mongodbURL , function ( err , dbConnection ){
@@ -74,7 +76,13 @@ MongoClient.connect( mongodbURL , function ( err , dbConnection ){
         console.log('server is running on ' + Number(port_value));
     });
 
+    //why????????????????????????
+    //module.exports = app; //for testing
+
 });
+
+//why????????????????????????
+module.exports = app; //for testing
 
 console.log(process.argv.length);
 console.log('prgram_name = process.argv[0]：' + process.argv[0]);

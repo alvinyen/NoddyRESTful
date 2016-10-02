@@ -64,6 +64,9 @@ exports.findById = function ( req , res ){
 
             res.status(200);
             res.json(newItem);
+            //res.send(newItem);////for testing only
+            //res.json和res.send，在Mocha中這兩個裡面，每次只能叫1個，因都會以res.end()回傳
+            //1次回傳2個會再Mocha Testing中出錯...
         }else{
             res.status(400);
             res.send({ success:false , msg:'item not found' });
