@@ -3,6 +3,7 @@ var assert = require('assert'); // for assert db connection
 var path = require('path');
 var express = require('express');
 var body_parser = require('body-parser');
+var mongoose = require('mongoose');
 
 var app = express();
 app.use(body_parser.json());
@@ -43,6 +44,8 @@ MongoClient.connect( mongodbURL , function ( err , dbConnection ){
 
     db = dbConnection ; //全域
     app.set( 'dbConnection' , dbConnection ); //global
+    app.set( 'mongooseDbConnection' , mongoose.connect(mongodbURL));
+
 
     require('./routes/things')(app);
     require('./routes/users')(app);
@@ -67,8 +70,10 @@ MongoClient.connect( mongodbURL , function ( err , dbConnection ){
         res.sendfile(app.get('public') , '500.html');
     });
 
-    app.listen(Number(port_value));
-    console.log('server is running on ' + Number(port_value));
+    app.listen(Number(port_value) , function(){
+        console.log('server is running on ' + Number(port_value));
+    });
+
 });
 
 console.log(process.argv.length);

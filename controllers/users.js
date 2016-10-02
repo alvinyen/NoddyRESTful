@@ -1,12 +1,15 @@
-var dbConnection;
+var dbConnection ;
+
 var ObjectID = require('mongodb').ObjectID;
+
+var User = require('../Models/User.model');
 
 exports.setDBConnectionFromApp = function ( app ){
     dbConnection = app.get('dbConnection');
 }
 
 exports.findAll = function ( req , res ){
-    var collection = dbConnection.collection('Users');
+    var collection = dbConnection.collection('users');
 
     var items = collection.find( {} , function ( err , docsCursor){ //returnItem
         res.type('application/json');
@@ -38,7 +41,7 @@ exports.findAll = function ( req , res ){
 }
 
 exports.findById = function ( req , res ){
-    var collection = dbConnection.collection('Users');
+    var collection = dbConnection.collection('users');
     res.type('application/json');
 
     var objectId = req.params.id;
@@ -70,7 +73,7 @@ exports.findById = function ( req , res ){
 }
 
 exports.findNearMe = function ( req , res ){
-    var collection = dbConnection.collection('Users');
+    var collection = dbConnection.collection('users');
     res.type('application/json');
 
     var lon = req.params.lon;
@@ -102,6 +105,22 @@ exports.findNearMe = function ( req , res ){
                 res.json(itemList);
             }
         });
+    });
+
+}
+
+exports.add = function ( req , res ){
+    res.type('application/json');
+
+    User.create( req.body , function (err , returnItem ){
+       if(err){
+           res.status(500);
+           res.send({ success : false , msg : 'error saving user' } );
+       } else {
+           console.log(returnItem);
+           res.status(201);
+           res.json(returnItem);
+       }
     });
 
 }
