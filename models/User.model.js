@@ -4,7 +4,7 @@ var Schema = mongoose.Schema;
 //name
 //email
 //password
-//location
+//location////
 
 var UserSchema =  new Schema({
     name : {
