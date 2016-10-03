@@ -27,7 +27,7 @@ describe('Users' , function(){
           var user = new Users({
               'name':'Amy',
               'email':'amy@test.com',
-              'password':'cestyyy',
+              'password':'cestyyyUIUIXYXYXY',
           });
 
            user.save(function(err,returnItem){
@@ -35,7 +35,7 @@ describe('Users' , function(){
                    .get('/services/v1/users/' + user.id)
                    .send(user)
                    .end(function(err,res){
-                       res.should.have.status(200);
+                       res.should.have.status(400);
                        res.should.be.a('object');
                        res.body.should.have.property('name');
                        done();
