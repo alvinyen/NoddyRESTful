@@ -4,6 +4,7 @@ var path = require('path');
 var express = require('express');
 var body_parser = require('body-parser');
 var mongoose = require('mongoose');
+var dbConnectionString = require('./config/config').dbConnectionString ;
 
 var app = express();
 app.use(body_parser.json());
@@ -15,7 +16,7 @@ var port_value = 4000;
 var port_string = process.argv[2];
 
 //var mongodbURL ;
-var mongodbURL = 'mongodb://localhost:27017/Noddy' ; //for mocha testing
+var mongodbURL = dbConnectionString ; //for mocha testing
 var db ;
 
 if( typeof port_string !== 'undefined' && port_string.length != 0 ){
