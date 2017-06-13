@@ -141,15 +141,15 @@ exports.delete = function ( req , res ){
     }
 
     var items = collection.remove( { _id:objectId } , function ( err , status){
-        console.log('status = ' + status);
-        if( status.n == 0 ){
+        // status.result, not status..
+        if( status.result.n == 0 ){
             //刪除失敗
             console.log('failed to delete during db remove operation..');
-            res.status();
+            res.status(400);
             res.send({success:false,msg:'failed to delete during db remove operation..'});
         }else{
-            res.status(204);
-            res.json({success:true,msg:'success to delete！'});
+            res.status(200);
+            res.json( { success : true ,  msg : 'success to delete' } );
             console.log('success to delete！');
         }
     });
